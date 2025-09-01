@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>ReMA</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      background: #f4f4f4;
+    }
+    button {
+      font-size: 20px;
+      padding: 15px 30px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+    }
+    #playBtn { background: #4CAF50; color: white; }
+    #resetBtn { background: #f44336; color: white; }
+  </style>
+</head>
+<body>
+  <h1>ReMA</h1>
+  <p>Reproduce audios aleatorios sin repetición</p>
+  
+  <button id="playBtn">▶ Play</button>
+  <button id="resetBtn">🔄 Reiniciar</button>
+
+  <script>
+    // Generamos una lista con 169 audios (asegúrate que estén en la carpeta "audios")
+    let audios = Array.from({ length: 169 }, (_, i) => `audios/audio${i+1}.mp3`);
+
+    let audiosDisponibles = [...audios];
+    let audioPlayer = new Audio();
+
+    document.getElementById("playBtn").addEventListener("click", () => {
+      if (audiosDisponibles.length === 0) {
+        alert("¡Ya se reprodujeron todos los audios! Pulsa Reiniciar.");
+        return;
+      }
+      // Seleccionar un audio aleatorio
+      let index = Math.floor(Math.random() * audiosDisponibles.length);
+      let seleccionado = audiosDisponibles.splice(index, 1)[0];
+
+      audioPlayer.src = seleccionado;
+      audioPlayer.play();
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      audiosDisponibles = [...audios];
+      alert("La lista de audios ha sido reiniciada.");
+    });
+  </script>
+</body>
+</html>
